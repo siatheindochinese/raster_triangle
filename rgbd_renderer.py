@@ -18,9 +18,8 @@ import time
 
 parser = ArgumentParser()
 parser.add_argument(
-    "--cls", type=str, default="ape",
-    help="Target object from {ape, benchvise, cam, can, cat, driller, duck, \
-    eggbox, glue, holepuncher, iron, lamp, phone} (default ape)"
+    "--cls", type=str, default="ufcoco",
+    help="Target object from {ufcoco} (default ufcoco)"
 )
 parser.add_argument(
     '--render_num', type=int, default=70000,
@@ -44,28 +43,14 @@ def check_dir(pth):
 
 
 OBJ_ID_DICT = {
-    'ape': 1,
-    'benchvise': 2,
-    'cam': 4,
-    'can': 5,
-    'cat': 6,
-    'driller': 8,
-    'duck': 9,
-    'eggbox': 10,
-    'glue': 11,
-    'holepuncher': 12,
-    'iron': 13,
-    'lamp': 14,
-    'phone': 15,
+    'ufcoco': 1,
 }
 
 
 class LineModRenderDB():
     def __init__(self, cls_type, render_num=10, rewrite=False):
         self.h, self.w = 480, 640
-        self.K = np.array([[700., 0., 320.],
-                           [0., 700., 240.],
-                           [0., 0., 1.]])
+        self.K = np.loadtxt('intrin/intrin_ps3.txt')
 
         self.cls_type = cls_type
         self.cls_id = OBJ_ID_DICT[cls_type]
